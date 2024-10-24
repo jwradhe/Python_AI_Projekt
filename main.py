@@ -1,6 +1,8 @@
 import pandas as pd
 import re
 import os
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
 
 class Load_Data:
 
@@ -112,7 +114,11 @@ def main():
     data_loader = Load_Data()
     data = data_loader.check_data()
 
-    print(data.head(100))
+    if data is not None and not data.empty:  
+        user_input = input("Which Movie or TV-Series do you prefer?: ")
+
+    else:
+        print("No data available to search.")
 
 if __name__ == "__main__":
     main()
