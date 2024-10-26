@@ -6,11 +6,12 @@ from sklearn.preprocessing import OneHotEncoder
 from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
 
-class Load_Data:
+class LoadData:
 
     def __init__(self):
         self.data_file = 'data_movies_series.csv'
         self.data = None
+        self.loaded_datasets = []
 
     def check_data(self):
         if os.path.isfile(self.data_file):
@@ -29,58 +30,42 @@ class Load_Data:
                 return None 
 
     def clean_text(self, text):
- 
         if isinstance(text, str):
             cleaned = re.sub(r'[^\x00-\x7F]+', '', text)
             cleaned = cleaned.replace('#', '')
             cleaned = cleaned.replace('"', '')
             return cleaned.strip()
         return '' 
+  
+    def clean_data(self):
+        string_columns = self.data.select_dtypes(include=['object'])
+        self.data[string_columns.columns] = string_columns.apply(lambda col: col.map(self.clean_text, na_action='ignore'))
+        self.data = self.data[~self.data['title'].str.strip().isin(['', ':'])]
+        print(f'Data cleaned successfully.')
+
+    def load_dataset(self, dataset_path, stream):
+        print(f'dataset/{dataset_path}')
+        try:
+            df = pd.read_csv(f'dataset/{dataset_path}')
+            df['stream'] = stream
+            if stream not in 'IMDB':
+                df = df.drop(columns=['show_id', 'date_added', 'duration', 'rating'], errors='ignore')
+                df = df.rename(columns={'listed_in': 'genres'})
+            else:
+                df = df.rename(columns={'releaseYear': 'release_year'})
+                df = df.drop(columns=['numVotes', 'id','avaverageRating'], errors='ignore')
+            self.loaded_datasets.append(stream)
+            return df
+        except FileNotFoundError:
+            print(f'Warning: "{dataset_path}" not found. Skipping this dataset.')
 
     def create_data(self):
         print(f'Starting to read data ...')
-
-        df_netflix = None
-        df_amazon = None
-        df_disney = None
-        df_imdb = None 
-        loaded_datasets = []
-
-        try:
-            df_netflix = pd.read_csv('dataset/data_netflix.csv')
-            df_netflix['stream'] = 'Netflix'
-            df_netflix = df_netflix.drop(columns=['show_id', 'date_added', 'duration', 'rating'], errors='ignore')
-            df_netflix = df_netflix.rename(columns={'listed_in': 'genres'})
-            loaded_datasets.append('Netflix')
-        except FileNotFoundError:
-            print("Warning: 'data_netflix.csv' not found. Skipping this dataset.")
-
-        try:
-            df_amazon = pd.read_csv('dataset/data_amazon.csv')
-            df_amazon['stream'] = 'Amazon'
-            df_amazon = df_amazon.drop(columns=['show_id', 'date_added', 'duration', 'rating'], errors='ignore')
-            df_amazon = df_amazon.rename(columns={'listed_in': 'genres'})
-            loaded_datasets.append('Amazon')
-        except FileNotFoundError:
-            print("Warning: 'data_amazon.csv' not found. Skipping this dataset.")
         
-        try:
-            df_disney = pd.read_csv('dataset/data_disney.csv')
-            df_disney['stream'] = 'Disney'
-            df_disney = df_disney.drop(columns=['show_id', 'date_added', 'duration', 'rating'], errors='ignore')
-            df_disney = df_disney.rename(columns={'listed_in': 'genres'})
-            loaded_datasets.append('Disney')
-        except FileNotFoundError:
-            print("Warning: 'data_disney.csv' not found. Skipping this dataset.")
-
-        try:
-            df_imdb = pd.read_csv('dataset/data_imdb.csv')
-            df_imdb['stream'] = 'Unknown'
-            df_imdb = df_imdb.rename(columns={'releaseYear': 'release_year'})
-            df_imdb = df_imdb.drop(columns=['numVotes', 'id','avaverageRating'], errors='ignore')
-            loaded_datasets.append('IMDB')
-        except FileNotFoundError:
-            print("Warning: 'data_imdb.csv' not found. Skipping this dataset.")
+        df_netflix = self.load_dataset('data_netflix.csv','Netflix')
+        df_amazon = self.load_dataset('data_amazon.csv','Amazon')
+        df_disney = self.load_dataset('data_disney.csv','Disney')
+        df_imdb = self.load_dataset('data_imdb.csv','IMDB')
 
         dataframes = [df for df in [df_imdb, df_netflix, df_amazon, df_disney] if df is not None]
         if not dataframes:
@@ -91,13 +76,7 @@ class Load_Data:
         df_all = df_all.infer_objects(copy=False)
         self.data = df_all
 
-        print(f'Data from {", ".join(loaded_datasets)} loaded successfully.')
-    
-    def clean_data(self):
-        string_columns = self.data.select_dtypes(include=['object'])
-        self.data[string_columns.columns] = string_columns.apply(lambda col: col.map(self.clean_text, na_action='ignore'))
-        self.data = self.data[~self.data['title'].str.strip().isin(['', ':'])]
-        print(f'Data cleaned successfully.')
+        print(f'Data from {", ".join(self.loaded_datasets)} loaded successfully.')
 
     def save_data(self):
         self.data.to_csv(self.data_file, index=False)
@@ -109,13 +88,23 @@ class Load_Data:
         print(f'{num_rows} titles loaded successfully.')
 
 
+class UserData:
+
+    def __init__(self):
+        self.user_data = None
+
+    def input(self):
+        self.user_data = input("Which Movie or TV-Serie do you prefer: ")
+        return self.user_data.lower()
+
+
 class Search:
 
     def __init__(self, data):
         self.data = data
-        self.preproccess()
+        self.preprocess()
 
-    def preproccess(self):
+    def preprocess(self):
         self.description_vectorizer = TfidfVectorizer(stop_words='english')
         self.description_matrix = self.description_vectorizer.fit_transform(self.data['description'].fillna(''))
         
@@ -140,20 +129,30 @@ class Search:
         return self.data.iloc[top_indices][['title', 'genres', 'type', 'release_year', 'stream','description']]
 
 
+class Recommendations:
+
+    def __init__(self):
+        self.result = None
+
+    def get_recommendations(self, user_data, title_data):
+        if title_data is not None and not title_data.empty:     
+            search_data = Search(title_data)
+            self.results = search_data.search(user_data)
+            print(self.results)
+        else:
+            print("No data available to search.")
+
+
 def main():
 
-    data_loader = Load_Data()
-    data = data_loader.check_data()
+    data_loader = LoadData()
+    title_data = data_loader.check_data()
 
-    if data is not None and not data.empty:  
+    user_data = UserData()
+    user_input = user_data.input()
 
-        user_input = input("Which Movie or TV-Serie do you prefer: ")
-        search_data = Search(data)
-        results = search_data.search(user_input)
-        print(results)
-
-    else:
-        print("No data available to search.")
+    recommendations = Recommendations()
+    recommendations.get_recommendations(user_data, title_data)
 
 if __name__ == "__main__":
     main()
