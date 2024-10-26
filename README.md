@@ -1,3 +1,11 @@
+<<<<<<< HEAD
+# Python_AI_Projekt
+Projekt för Pythonkurs (AI)
+
+
+Autoencoders
+Scikit-learn: - K-nearest neighbors
+=======
 # Supervised Learning - Movie/TV-Show recommender
 
 ## Specification
@@ -51,3 +59,4 @@ I will use k-Nearest Neighbors (k-NN) alhorithm that can help me find other titl
      * get_recommendations 
 
 
+>>>>>>> b992895c329b4c147193b68b17c8181bb17fb220
