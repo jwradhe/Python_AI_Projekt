@@ -1,2 +1,2 @@
-# Python_AI_Projekt
-Projekt för Pythonkurs (AI)
+# Supervised Learning - Movie/TVShow recommender
+
