@@ -6,28 +6,19 @@ from sklearn.preprocessing import OneHotEncoder
 from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
 
+
 class LoadData:
 
     def __init__(self):
-        self.data_file = 'data_movies_series.csv'
         self.data = None
         self.loaded_datasets = []
 
     def check_data(self):
-        if os.path.isfile(self.data_file):
-            self.load_data()
-            return self.data
-        else:
-            self.create_data() 
-            if self.data is not None and not self.data.empty:
-                self.clean_data()
-                self.save_data()
-                num_rows = self.data.shape[0]
-                print(f'{num_rows} titles loaded successfully.')
-                return self.data
-            else:
-                print("Error: No data was created. Please check the dataset files.")
-                return None 
+        self.create_data()
+        self.clean_data()
+        num_rows = self.data.shape[0]
+        print(f'{num_rows} titles loaded successfully.')
+        return self.data
 
     def clean_text(self, text):
         if isinstance(text, str):
@@ -36,15 +27,8 @@ class LoadData:
             cleaned = cleaned.replace('"', '')
             return cleaned.strip()
         return '' 
-  
-    def clean_data(self):
-        string_columns = self.data.select_dtypes(include=['object'])
-        self.data[string_columns.columns] = string_columns.apply(lambda col: col.map(self.clean_text, na_action='ignore'))
-        self.data = self.data[~self.data['title'].str.strip().isin(['', ':'])]
-        print(f'Data cleaned successfully.')
 
     def load_dataset(self, dataset_path, stream):
-        print(f'dataset/{dataset_path}')
         try:
             df = pd.read_csv(f'dataset/{dataset_path}')
             df['stream'] = stream
@@ -76,16 +60,13 @@ class LoadData:
         df_all = df_all.infer_objects(copy=False)
         self.data = df_all
 
-        print(f'Data from {", ".join(self.loaded_datasets)} loaded successfully.')
+        print(f'Data from {", ".join(self.loaded_datasets)} imported.')
 
-    def save_data(self):
-        self.data.to_csv(self.data_file, index=False)
-        print(f'Data saved to {self.data_file} successfully.')
-
-    def load_data(self):
-        self.data = pd.read_csv(self.data_file)
-        num_rows = self.data.shape[0]
-        print(f'{num_rows} titles loaded successfully.')
+    def clean_data(self):
+        string_columns = self.data.select_dtypes(include=['object'])
+        self.data[string_columns.columns] = string_columns.apply(lambda col: col.map(self.clean_text, na_action='ignore'))
+        self.data = self.data[~self.data['title'].str.strip().isin(['', ':'])]
+        print(f'Data cleaned')
 
 
 class UserData:
@@ -98,46 +79,16 @@ class UserData:
         return self.user_data.lower()
 
 
-class Search:
-
-    def __init__(self, data):
-        self.data = data
-        self.preprocess()
-
-    def preprocess(self):
-        self.description_vectorizer = TfidfVectorizer(stop_words='english')
-        self.description_matrix = self.description_vectorizer.fit_transform(self.data['description'].fillna(''))
-        
-        self.onehot_encoder = OneHotEncoder(handle_unknown='ignore', sparse_output=False)
-        genres_type_matrix = self.onehot_encoder.fit_transform(self.data[['genres', 'type']].fillna(''))
-
-        self.feature_matrix = np.hstack([
-            self.description_matrix.toarray(),
-            genres_type_matrix,
-            self.data[['release_year']].fillna(0).to_numpy()
-        ])
-
-    def search(self, query, top_n=20):
-        query_vec = self.description_vectorizer.transform([query])
-        
-        if hasattr(query_vec, "toarray"):
-            query_vec = query_vec.toarray()
-        
-        similarity = cosine_similarity(query_vec, self.description_matrix).flatten()
-
-        top_indices = similarity.argsort()[-top_n:][::-1]
-        return self.data.iloc[top_indices][['title', 'genres', 'type', 'release_year', 'stream','description']]
-
-
 class Recommendations:
 
     def __init__(self):
         self.result = None
 
     def get_recommendations(self, user_data, title_data):
-        if title_data is not None and not title_data.empty:     
-            search_data = Search(title_data)
-            self.results = search_data.search(user_data)
+        if title_data is not None and not title_data.empty: 
+
+            self.results = "Här ska de komma rekommendationer"
+
             print(self.results)
         else:
             print("No data available to search.")
