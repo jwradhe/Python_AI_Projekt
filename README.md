@@ -24,16 +24,16 @@ like Title, Release year, Description, Cast, Director and genres.
 
 ### Requirements:
 1. Title data:
-  * Title
-  * Genres
-  * Release year
-  * Cast
-  * Director
-  * Description
-2. User data:
-  * What Movie / TV-Show
-  * What genre
-  * Director
+    * Title
+    * Genres
+    * Release year
+    * Cast
+    * Director
+    * Description
+3. User data:
+    * What Movie / TV-Show
+    * What genre
+    * Director
 
 ### Libraries
   * pandas: Data manipulation and analysis
