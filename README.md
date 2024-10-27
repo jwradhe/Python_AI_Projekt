@@ -4,17 +4,22 @@
 Movie/TV-Show recommender
 
 This program will recommend you what movie or th-show to view based on what Movie/TV-Show you like.
+You should be able to search for recommendations from your Movie/TV-Show title, cast, director, 
+release year and also Description, and get back a recommendations with a explanation on what just this 
+title might suit you.
 
 ### Data Source:
-I will use 4 datasets from kaggle, 3 datasets from streaming-sites Netflix, Amazon Prime and Disney Plus, also 1 from a IMDB dataset.
+I will use 4 datasets from kaggle, 3 datasets from streaming-sites Netflix, 
+Amazon Prime and Disney Plus, also 1 from a IMDB dataset.
 
 ### Model:
-I will use k-Nearest Neighbors (k-NN) alhorithm that can help me find other titles based on features like Title, Release year, Description, Cast, Director and genres.
+I will use k-Nearest Neighbors (k-NN) alhorithm that can help me find other titles based on features 
+like Title, Release year, Description, Cast, Director and genres.
 
 ### Features:
-1.  Load data and preprocessing before creating new dataset csv file.
+1.  Load data from several data-files and preprocessing.
 2.  Model training with k-NN algorithm.
-3.  
+3.  Search with explanation
 
 ### Requirements:
 1. Title data:
@@ -32,8 +37,7 @@ I will use k-Nearest Neighbors (k-NN) alhorithm that can help me find other titl
 ### Libraries
   * pandas: Data manipulation and analysis
   * scikit-learn: machine learning algorithms and preprocessing
-  * numpy: numerical operations
-  * beatifulsoup4: web scraping
+  * beatifulsoup4: web scraping (if necessary)
     
 ### Classes
   1. LoadData
