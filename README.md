@@ -6,7 +6,8 @@ Movie/TV-Show recommender
 This program will recommend you what movie or th-show to view based on what Movie/TV-Show you like.
 You should be able to search for recommendations from your Movie/TV-Show title, cast, director, 
 release year and also Description, and get back a recommendations with a explanation on what just this 
-title might suit you.
+title might suit you. It will get you about 25 recommendations of movies in order of rank from your search, 
+and the same from TV-Shows that will match the same way as Movies.
 
 ### Data Source:
 I will use 4 datasets from kaggle, 3 datasets from streaming-sites Netflix, 
