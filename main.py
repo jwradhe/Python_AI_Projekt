@@ -13,7 +13,7 @@ class LoadData:
         self.data = None
         self.loaded_datasets = []
 
-    def check_data(self):
+    def load_data(self):
         self.create_data()
         self.clean_data()
         num_rows = self.data.shape[0]
@@ -97,7 +97,7 @@ class Recommendations:
 def main():
 
     data_loader = LoadData()
-    title_data = data_loader.check_data()
+    title_data = data_loader.load_data()
 
     user_data = UserData()
     user_input = user_data.input()

@@ -42,7 +42,7 @@ like Title, Release year, Description, Cast, Director and genres.
     
 ### Classes
   1. LoadData
-     * check_data
+     * load_data
      * clean_text
      * clean_data
      * load_dataset
