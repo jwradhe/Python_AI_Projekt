@@ -14,7 +14,7 @@ I will use 4 datasets from kaggle, 3 datasets from streaming-sites Netflix,
 Amazon Prime and Disney Plus, also 1 from a IMDB dataset.
 
 ### Model:
-I will use k-Nearest Neighbors (k-NN) alhorithm that can help me find other titles based on features 
+I will use NearestNeighbors (NN) alhorithm that can help me find other titles based on features 
 like Title, Release year, Description, Cast, Director and genres.
 
 ### Features:
