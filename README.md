@@ -1,5 +1,13 @@
 # Supervised Learning - TV-Show recommender
 
+## How to run program
+
+### Before running program
+First thing to do is to extract TMDB_tv_dataset_v3.zip in dataset folder so that it contains TMDB_tv_dataset_v3.csv.
+
+### Running program
+Start main.py and it will load dataset and ask for a title to get recommendations from, also how many recommendations wanted. Then enter and you will have those recommendations presented on screen.
+
 ## Specification
 TV-Show recommender
 
@@ -79,14 +87,7 @@ I will use NearestNeighbors (NN) alhorithm together with K-NearestNeighbors alho
    * https://scikit-learn.org/0.16/modules/generated/sklearn.decomposition.TruncatedSVD.html
    * https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.hstack.html
    * https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.csr_matrix.html
-   * https://maartengr.github.io/BERTopic/getting_started/embeddings/embeddings.html
 
-## How to run program
 
-### Before running program
-First thing to do is to extract TMDB_tv_dataset_v3.zip in dataset folder so that it contains TMDB_tv_dataset_v3.csv.
-
-### Running program
-Start main.py and it will load dataset and ask for a title to get recommendations from, also how many recommendations wanted. Then enter and you will have those recommendations presented on screen.
 
 
