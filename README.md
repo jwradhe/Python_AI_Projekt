@@ -4,9 +4,11 @@
 ## How to run program
 
 **Before running program**
+
 First thing to do is to extract TMDB_tv_dataset_v3.zip in dataset folder so that it contains TMDB_tv_dataset_v3.csv.
 
 **Running program**
+
 Start main.py and it will load dataset and ask for a title to get recommendations from, also how many recommendations wanted. Then enter and you will have those recommendations presented on screen.
 
 
@@ -14,6 +16,7 @@ Start main.py and it will load dataset and ask for a title to get recommendation
 ## Specification
 
 **TV-Show recommender**
+
 This program will recommend you what tv-show to view based on what you like.
 You will tell what tv-show you like and how many recommendations wanted, then you will get that 
 amount of recommendations of tv-shows in order of rank from your search.
