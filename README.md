@@ -27,7 +27,8 @@ I will use a dataset from TMBD
 https://www.kaggle.com/datasets/asaniczka/full-tmdb-tv-shows-dataset-2023-150k-shows
 
 ### Model:
-I will use NearestNeighbors (NN) alhorithm together with K-NearestNeighbors alhorithm.
+I must first preprocess data with vectorization so that i can use it in NearestNeighbors (NN) alhorithm.
+I will use NearestNeighbors (NN) output as input to K-NearestNeighbors alhorithm.
 
 ### Features:
 1.  Load data from dataset and preprocessing.

@@ -34,7 +34,7 @@ class TrainModel:
         # Preprocess title data
         preproccessed_data = self.preprocess_title_data()
 
-        # Train the NN model
+        # Train the NearestNeighbors model
         self.model.fit(preproccessed_data)
 
         stop = time.time()
@@ -51,7 +51,7 @@ class TrainModel:
         # Preprocess target data
         target_vector = self.preprocess_target_data(target_row)
 
-        # Get nearest neighbors
+        # Use NearestNeighbors model as input to K-nearest neighbors
         distances, indices = self.model.kneighbors(target_vector, n_neighbors=num_recommendations)
         recommendations = self.title_data.iloc[indices[0]].copy()
         recommendations['distance'] = distances[0]
