@@ -1,5 +1,6 @@
 # Supervised Learning - TV-Show recommender
 
+
 ## How to run program
 
 ### Before running program
@@ -7,6 +8,8 @@ First thing to do is to extract TMDB_tv_dataset_v3.zip in dataset folder so that
 
 ### Running program
 Start main.py and it will load dataset and ask for a title to get recommendations from, also how many recommendations wanted. Then enter and you will have those recommendations presented on screen.
+
+
 
 ## Specification
 TV-Show recommender
@@ -17,6 +20,7 @@ amount of recommendations of tv-shows in order of rank from your search.
 
 ### Data Source:
 I will use a dataset from TMBD
+
 https://www.kaggle.com/datasets/asaniczka/full-tmdb-tv-shows-dataset-2023-150k-shows
 
 ### Model:
