@@ -7,11 +7,12 @@
 
 First thing to do is to extract TMDB_tv_dataset_v3.zip in dataset folder so that it contains TMDB_tv_dataset_v3.csv.
 
-
 **Running program**
 
 Start main.py and it will load dataset and ask for a title to get recommendations from, also how many recommendations wanted. Then enter and you will have those recommendations presented on screen.
 
+[!NOTE]
+First time loading program it will generate Sentence-BERT embeddings that will help program get better recommendations, this can take up to 5min due to big datafile.
 
 
 ## Specification
