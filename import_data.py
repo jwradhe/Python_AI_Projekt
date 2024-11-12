@@ -3,7 +3,9 @@ import os
 import pandas as pd
 
 
-############################## Import data ##############################
+###############################################################
+#### Class: ImportData                                                              
+###############################################################
 class ImportData:
 
     def __init__(self):
@@ -11,7 +13,9 @@ class ImportData:
         self.loaded_datasets = []
 
 
-# ---------------------- Function: load_dataset ----------------------
+    ###########################################################
+    #### Function: load_dataset                              
+    ###########################################################
     def load_dataset(self, dataset_path):
         # Load data from dataset CSV file
         try:
@@ -22,7 +26,9 @@ class ImportData:
             return None
 
 
-# ---------------------- Function: create_data ----------------------
+    ###########################################################
+    #### Function: create_data                              
+    ###########################################################
     def create_data(self, filename):
         try:
             self.data = self.load_dataset(filename)
@@ -32,7 +38,9 @@ class ImportData:
             return None
 
 
-# ---------------------- Function: clean_data ----------------------  
+    ###########################################################
+    #### Function: clean_data                               
+    ###########################################################
     def clean_data(self):
         if self.data is not None:
             # Drop unnecessary columns
@@ -53,7 +61,9 @@ class ImportData:
             print("No data to clean. Please load the dataset first.")
 
 
-# ---------------------- Function: save_data ----------------------
+    ###########################################################
+    #### Function: save_data                              
+    ###########################################################
     def save_data(self):
         if self.data is not None:
             try:

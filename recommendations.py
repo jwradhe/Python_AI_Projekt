@@ -3,14 +3,18 @@ import pandas as pd
 import textwrap
 
 
-############################## Recommendation loader ##############################
+###############################################################
+#### Class: RecommendationLoader                                
+###############################################################
 class RecommendationLoader:
     def __init__(self, model, title_data):
         self.model = model
         self.title_data = title_data
 
 
-# ------------------------ Function: run ------------------------
+    ###########################################################
+    #### Function: run                                 
+    ###########################################################
     def run(self):
         while True: 
             user_data = UserData()
@@ -36,14 +40,13 @@ class RecommendationLoader:
             print("#" * 100)
             print("\nWrite 'exit' or 'quit' to end the program.")
 
-
-# ------------------------ Function: get_recommendations ------------------------
+    
+    ###########################################################
+    #### Function: get_recommendations                                
+    ###########################################################
     def get_recommendations(self, target_row, user_data):
+        recommendations = pd.DataFrame()
         n_recommendations = user_data['n_rec']
-        recommendations = self.model.recommend(target_row, user_data['n_rec'])
-
-        # I dont want to recommend a title with Reality in it if the reference doesnt have that genre and so on
-        recommendations = self.filter_genres(recommendations, target_row)
 
         # Get more recommendations and filter untill n_recommendations is reached
         while len(recommendations) < n_recommendations:
@@ -58,7 +61,9 @@ class RecommendationLoader:
         self.display_recommendations(user_data, recommendations, n_recommendations, target_row)
 
 
-# ------------------------ Function: display_recommendations ------------------------
+    ###########################################################
+    #### Function: display_recommendations                                
+    ###########################################################
     def display_recommendations(self, user_data, recommendations, n_recommendations, target_row):
         print(f'\n{n_recommendations} recommendations based on "{user_data["title"]}":\n')
 
@@ -112,7 +117,9 @@ class RecommendationLoader:
             print("No recommendations found.")
 
 
-# ------------------------ Function: get_explanation ------------------------
+    ###########################################################
+    #### Function: get_explanation                                 
+    ###########################################################
     def get_explanation(self, row, target_row):
         explanation = []
         title = row['name']
@@ -136,7 +143,9 @@ class RecommendationLoader:
         return ' '.join(explanation)
 
 
-# ------------------------ Function: check_genre_overlap ------------------------
+    ###########################################################
+    #### Function: check_genre_overlap                              
+    ###########################################################
     def check_genre_overlap(self, target_row, row):
         # Get genres from the target row
         target_genres = set(genre.lower() for genre in target_row['genres'])
@@ -149,7 +158,9 @@ class RecommendationLoader:
         return overlap
 
 
-# ------------------------ Function: check_created_by_overlap ------------------------
+    ###########################################################
+    #### Function: check_created_by_overlap                                
+    ###########################################################
     def check_created_by_overlap(self, target_row, row):
         # Get created_by from the target row
         target_creators = set(creator.lower() for creator in target_row['created_by'])
@@ -162,7 +173,9 @@ class RecommendationLoader:
         return overlap
 
 
-# ------------------------ Function: extract_years ------------------------
+    ###########################################################
+    #### Function: extract_years                                 
+    ###########################################################
     def extract_years(self, air_date):
         # Make sure air_date is not null
         if pd.isna(air_date):
@@ -173,7 +186,9 @@ class RecommendationLoader:
         return air_date.split('-')[0]  
 
 
-# ------------------------ Function: get_recommendations ------------------------
+    ###########################################################
+    #### Function: filter_genres                              
+    ###########################################################
     def filter_genres(self, recommendations, target_row):
         # Get genres from the target row
         reference_genres = [genre.lower() for genre in target_row['genres']]

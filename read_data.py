@@ -2,14 +2,18 @@ import pandas as pd
 from import_data import ImportData
 
 
-############################## Load data ##############################
+#########################################################################
+#### Class: LoadData                                                
+#########################################################################
 class LoadData:
     def __init__(self):
         self.data = None
         self.filename = 'TMDB_tv_dataset_v3.csv'
 
 
-# ---------------------- Function: load_data ----------------------
+    ###########################################################
+    #### Function: load_data                               
+    ###########################################################
     def load_data(self):
         self.read_data()
         self.clean_data()
@@ -17,7 +21,9 @@ class LoadData:
         return self.data
 
 
-# ---------------------- Function: read_data ----------------------
+    ###########################################################
+    #### Function: read_data                             
+    ###########################################################
     def read_data(self):
         print("Starting to read data ...")
         try:
@@ -38,7 +44,9 @@ class LoadData:
                 print(f"Error during data import process: {e}")
 
 
-# ---------------------- Function: clean_data ----------------------
+    ###########################################################
+    #### Function: clean_data                               
+    ###########################################################
     def clean_data(self):
         # Function to split a string into a list, or use an empty list if no valid data
         def split_to_list(value):

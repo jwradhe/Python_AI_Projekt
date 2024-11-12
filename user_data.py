@@ -1,10 +1,14 @@
-############################## User input ##############################
+###############################################################
+#### Class: UserData                                                                
+###############################################################
 class UserData:
     def __init__(self):
         self.user_data = {} 
         self.n_rec = 10
 
-# ---------------------- Function: title ---------------------- 
+    ###########################################################
+    #### Function: title                               
+    ###########################################################
     def title(self):
         # Ask for user input
         print("#" * 100)
@@ -12,7 +16,9 @@ class UserData:
         self.user_data['title'] = title.strip().lower()
         return self.user_data
     
-# ---------------------- Function: n_recommendations ----------------------
+    ###########################################################
+    #### Function: n_recommendations                                
+    ###########################################################
     def n_recommendations(self):
         # Ask for number of recommendations
         while True:
