@@ -1,5 +1,5 @@
-from read_data import LoadData
-from trainmodel import TrainModel
+from readdata import LoadData
+from training import TrainModel
 from recommendations import RecommendationLoader
 
 

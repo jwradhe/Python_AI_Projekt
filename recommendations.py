@@ -1,4 +1,4 @@
-from user_data import UserData
+from user import UserData
 import pandas as pd
 import textwrap
 
@@ -44,7 +44,7 @@ class RecommendationLoader:
     ###########################################################
     #### Function: get_recommendations                                
     ###########################################################
-    def get_recommendations(self, target_row, user_data):
+    def get_recommendations(self, type, target_row, user_data):
         recommendations = pd.DataFrame()
         n_recommendations = user_data['n_rec']
 
@@ -58,7 +58,10 @@ class RecommendationLoader:
         # Make sure we give n_recommendations recommendations
         recommendations = recommendations.head(n_recommendations)    
 
-        self.display_recommendations(user_data, recommendations, n_recommendations, target_row)
+        if type == 'flask':
+            return recommendations
+        else:
+            self.display_recommendations(user_data, recommendations, n_recommendations, target_row)
 
 
     ###########################################################
@@ -105,73 +108,12 @@ class RecommendationLoader:
                 if not seasons == 'N/A' and not episodes == 'N/A':
                     print(f"Seasons:  {seasons} ({episodes} episodes)")
                 print(f'\n{overview}\n')
-                
-                # Get explanation for recommendation
-                explanation = self.get_explanation(row, target_row)
-                print(f"{explanation}\n")
 
                 print("-" * width)
 
             print("\nEnd of recommendations.")
         else:
             print("No recommendations found.")
-
-
-    ###########################################################
-    #### Function: get_explanation                                 
-    ###########################################################
-    def get_explanation(self, row, target_row):
-        explanation = []
-        title = row['name']
-
-        explanation.append(f"The title '{title}' was recommended because: \n")
-
-        # Explain genre overlap
-        genre_overlap = self.check_genre_overlap(target_row, row)
-        if genre_overlap:
-            overlapping_genres = ', '.join(genre_overlap)
-            explanation.append(f"It shares the following genres with your preferences: {overlapping_genres}.\n")   
-        
-        # Explain created_by overlap
-        created_by_overlap = self.check_created_by_overlap(target_row, row)
-        if created_by_overlap:
-            overlapping_created_by = ', '.join(created_by_overlap)
-            explanation.append(f"It shares the following director with your preferences: {overlapping_created_by}.\n")
-
-        # Explain the distance metric
-        explanation.append(f"The distance metric of {round(row['distance'], 2)} indicates that it is quite similar to your preferences.")
-        return ' '.join(explanation)
-
-
-    ###########################################################
-    #### Function: check_genre_overlap                              
-    ###########################################################
-    def check_genre_overlap(self, target_row, row):
-        # Get genres from the target row
-        target_genres = set(genre.lower() for genre in target_row['genres'])
-        # Get genres from the recommended row
-        recommended_genres = set(genre.lower() for genre in row['genres'])
-
-        # Find the intersection of the target genres and recommended genres
-        overlap = target_genres.intersection(recommended_genres) 
-
-        return overlap
-
-
-    ###########################################################
-    #### Function: check_created_by_overlap                                
-    ###########################################################
-    def check_created_by_overlap(self, target_row, row):
-        # Get created_by from the target row
-        target_creators = set(creator.lower() for creator in target_row['created_by'])
-        # Get created_by from the recommended row
-        recommended_creators = set(creator.lower() for creator in row['created_by'])
-
-        # Find the intersection of the target creators and recommended creators
-        overlap = target_creators.intersection(recommended_creators)
-
-        return overlap
-
 
     ###########################################################
     #### Function: extract_years                                 
@@ -190,6 +132,7 @@ class RecommendationLoader:
     #### Function: filter_genres                              
     ###########################################################
     def filter_genres(self, recommendations, target_row):
+
         # Get genres from the target row
         reference_genres = [genre.lower() for genre in target_row['genres']]
 

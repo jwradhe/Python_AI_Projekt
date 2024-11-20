@@ -1,102 +1,129 @@
-# Supervised Learning - TV-Show recommender
+# Supervised Learning - TV-Show Recommender
 
+## Table of Contents
+1. [How to Run the Program](#how-to-run-the-program)
+2. [Project Overview](#project-overview)
+3. [Dataset](#dataset)
+4. [Model and Algorithm](#model-and-algorithm)
+5. [Features](#features)
+6. [Requirements](#requirements)
+7. [Libraries](#libraries)
+8. [Classes](#classes)
+9. [References](#references)
 
-## How to run program
+## How to Run the Program
 
-**Before running program**
+### Prerequisites
 
-First thing to do is to extract TMDB_tv_dataset_v3.zip in dataset folder so that it contains TMDB_tv_dataset_v3.csv.
+1. **Download and Extract the Dataset:**
+   - Download the dataset from [TMDB TV Dataset](https://www.kaggle.com/datasets/asaniczka/full-tmdb-tv-shows-dataset-2023-150k-shows).
+   - Extract `TMDB_tv_dataset_v3.zip` into the `dataset/` folder, so it contains the file `TMDB_tv_dataset_v3.csv`.
 
-**Running program**
+2. **Install Dependencies:**
+   - Install the necessary libraries listed in `requirements.txt` (see below).
 
-Start main.py and it will load dataset and ask for a title to get recommendations from, also how many recommendations wanted. Then enter and you will have those recommendations presented on screen.
+3. **Run the Program:**
+   - Start the program by running the following command:
+   
+     ```bash
+     python main.py
+     ```
 
-> [!NOTE]
-> First time loading program it will generate Sentence-BERT embeddings that will help program get better recommendations, this can take up to 5min due to big datafile.
+   - The program will load the dataset, ask for a TV show title to base recommendations on, and prompt for the number of recommendations.
 
+   - **Note:** The first time the program is run, it will generate **Sentence-BERT embeddings**. This can take up to 5 minutes due to the large size of the dataset.
 
-## Specification
+---
 
-**TV-Show recommender**
+## Project Overview
 
-This program will recommend you what tv-show to view based on what you like.
-You will tell what tv-show you like and how many recommendations wanted, then you will get that 
-amount of recommendations of tv-shows in order of rank from your search.
+The **TV-Show Recommender** is a machine learning-based program that suggests TV shows to users based on their preferences. The system uses **Nearest Neighbors (NN)** and **K-Nearest Neighbors (K-NN)** algorithms with **cosine distance** to recommend TV shows. Users provide a title of a TV show they like, and the system returns personalized recommendations based on similarity to other TV shows in the dataset.
 
-### Data Source:
-I will use a dataset from TMBD
+---
 
-https://www.kaggle.com/datasets/asaniczka/full-tmdb-tv-shows-dataset-2023-150k-shows
+## Dataset
 
-### Model:
-I must first preprocess data with vectorization so that i can train it in NearestNeighbors (NN) alhorithm with cosine distance. Later use NearestNeighbors (NN) in combination with K-NearestNeighbors (K-NN) alhorithm.
+The dataset used in this project is sourced from **TMDB** (The Movie Database). It contains over 150,000 TV shows and includes information such as:
 
-### Features:
-1.  Load data from dataset and preprocessing.
-2.  Model training with NN & k-NN algorithm.
-3.  User input
-4.  Recommendations
+- Title of TV shows
+- Genres
+- First/Last air date
+- Vote count and average rating
+- Director/Creator information
+- Overview/Description
+- Networks
+- Spoken languages
+- Number of seasons/episodes
 
-### Requirements:
-1. Title data:
-    * Title
-    * Genres
-    * First/last air date
-    * Vote count/average
-    * Director
-    * Description
-    * Networks
-    * Spoken languages
-    * Number of seasons/episodes
-2. User data:
-    * What Movie / TV-Show prefers
-    * Number of recommendations wanted
+Download the dataset from [here](https://www.kaggle.com/datasets/asaniczka/full-tmdb-tv-shows-dataset-2023-150k-shows).
 
-### Libraries
-  * pandas: Data manipulation and analysis
-  * scikit-learn: machine learning algorithms and preprocessing
-  * scipy: A scientific computing package for Python
-  * time: provides various functions for working with time
-  * os: functions for interacting with the operating system
-  * re: provides regular expression support
-  * textwrap: Text wrapping and filling
-    
-### Classes
-  1. LoadData
-     * load_data
-     * read_data
-     * clean_data
-  2. ImportData
-     * load_dataset
-     * create_data
-     * clean_data
-     * save_data
-  3. TrainModel
-     * train
-     * recommend
-     * preprocess_title_data
-     * preprocess_target_data
-  4. UserData
-     * input
-     * n_recommendations
-  5. RecommendationLoader
-     * run 
-     * get_recommendations
-     * display_recommendations
-     * get_explanation
-     * check_genre_overlap
-     * check_created_by_overlap
-     * extract_years
-     * filter_genres
+---
 
-### References   
-   * https://scikit-learn.org/dev/modules/generated/sklearn.neighbors.NearestNeighbors.html
-   * https://scikit-learn.org/1.5/modules/generated/sklearn.feature_extraction.text.TfidfVectorizer.html
-   * https://scikit-learn.org/dev/modules/generated/sklearn.preprocessing.StandardScaler.html
-   * https://scikit-learn.org/0.16/modules/generated/sklearn.decomposition.TruncatedSVD.html
-   * https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.hstack.html
-   * https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.csr_matrix.html
+## Model and Algorithm
 
+The recommender system is based on **Supervised Learning** using the **NearestNeighbors** and **K-NearestNeighbors** algorithms. Here's a breakdown of the process:
 
+1. **Data Preprocessing:** 
+   - The TV show descriptions are vectorized using **Sentence-BERT embeddings** to create dense vector representations of each show's description.
+   
+2. **Model Training:**
+   - The **NearestNeighbors (NN)** algorithm is used with **cosine distance** to compute similarity between TV shows. The algorithm finds the most similar shows to a user-provided title.
+   
+3. **Recommendation Generation:**
+   - The model generates a list of recommended TV shows by finding the nearest neighbors of the input title using cosine similarity.
 
+---
 
+## Features
+
+1. **Data Loading & Preprocessing:** 
+   - Loads the TV show data from a CSV file and preprocesses it for model training.
+
+2. **Model Training with K-NN:**
+   - Trains a K-NN model using the **NearestNeighbors** algorithm for generating recommendations.
+
+3. **User Input for Recommendations:**
+   - Accepts user input for the TV show title and the number of recommendations.
+
+4. **TV Show Recommendations:**
+   - Returns a list of recommended TV shows based on similarity to the input TV show.
+
+---
+
+## Requirements
+
+### Data Requirements:
+The dataset should contain the following columns for each TV show:
+- **Title**
+- **Genres**
+- **First/Last air date**
+- **Vote count/average**
+- **Director**
+- **Overview**
+- **Networks**
+- **Spoken languages**
+- **Number of seasons/episodes**
+
+### User Input Requirements:
+- **TV Show Title**: The name of the TV show you like.
+- **Number of Recommendations**: The number of recommendations you want to receive (default is 10).
+
+---
+
+## Libraries
+
+The following libraries are required to run the program:
+
+- **pandas**: For data manipulation and analysis.
+- **scikit-learn**: For machine learning algorithms and preprocessing.
+- **scipy**: For scientific computing (e.g., sparse matrices).
+- **time**: For working with time-related functions.
+- **os**: For interacting with the operating system.
+- **re**: For regular expression support.
+- **textwrap**: For text wrapping and formatting.
+- **flask**: For creating the web interface.
+
+To install the dependencies, run:
+
+```bash
+pip install -r requirements.txt
