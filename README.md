@@ -26,12 +26,14 @@
    - Start the program by running the following command:
    
      ```bash
-     python main.py
+     python app.py
      ```
 
    - The program will load the dataset, ask for a TV show title to base recommendations on, and prompt for the number of recommendations.
 
-   - **Note:** The first time the program is run, it will generate **Sentence-BERT embeddings**. This can take up to 5 minutes due to the large size of the dataset.
+   > [!NOTE]
+   >  The first time the program is run, it will generate **Sentence-BERT embeddings**. This can take up to 5 minutes due to the large size of the dataset.
+
 
 ---
 
