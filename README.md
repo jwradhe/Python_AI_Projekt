@@ -34,8 +34,8 @@ To run the web-based interface (Flask application):
 python app.py
 ```
    
-This will start a local web server, and you can access the app through your browser (usually at http://127.0.0.1:5000/).
-The program will load the dataset, prompt you to enter a TV show title, and ask how many recommendations you want.
+- This will start a local web server, and you can access the app through your browser (usually at http://127.0.0.1:5000/).
+- The program will load the dataset, prompt you to enter a TV show title, and ask how many recommendations you want.
    
 #### Command-Line Interface (Python-GUI)
 
@@ -45,7 +45,7 @@ To run the command-line version of the program:
 python main.py
 ```
 
-The program will work in the terminal, asking you to enter the title of a TV show you like and how many recommendations you want.
+- The program will work in the terminal, asking you to enter the title of a TV show you like and how many recommendations you want.
 
 > [!NOTE]
 >  The first time the program is run, it will generate **Sentence-BERT embeddings**. This can take up to 5 minutes due to the large size of the dataset.
