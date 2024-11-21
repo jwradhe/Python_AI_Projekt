@@ -22,18 +22,33 @@
 2. **Install Dependencies:**
    - Install the necessary libraries listed in `requirements.txt` (see below).
 
-3. **Run the Program:**
-   - Start the program by running the following command:
+### Running the Program
+
+There are two ways to run the program, depending on whether you prefer to use the web-based interface or the command-line interface (CLI).
+
+#### Web Interface (Flask)
+
+To run the web-based interface (Flask application):
+
+```bash
+python app.py
+```
    
-     ```bash
-     python app.py
-     ```
+This will start a local web server, and you can access the app through your browser (usually at http://127.0.0.1:5000/).
+The program will load the dataset, prompt you to enter a TV show title, and ask how many recommendations you want.
+   
+#### Command-Line Interface (Python-GUI)
 
-   - The program will load the dataset, ask for a TV show title to base recommendations on, and prompt for the number of recommendations.
+To run the command-line version of the program:
+   
+```bash
+python main.py
+```
 
-   > [!NOTE]
-   >  The first time the program is run, it will generate **Sentence-BERT embeddings**. This can take up to 5 minutes due to the large size of the dataset.
+The program will work in the terminal, asking you to enter the title of a TV show you like and how many recommendations you want.
 
+> [!NOTE]
+>  The first time the program is run, it will generate **Sentence-BERT embeddings**. This can take up to 5 minutes due to the large size of the dataset.
 
 ---
 
