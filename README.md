@@ -54,7 +54,7 @@ python main.py
 
 ## Project Overview
 
-The **TV-Show Recommender** is a machine learning-based program that suggests TV shows to users based on their preferences. The system uses **Nearest Neighbors (NN)** and **K-Nearest Neighbors (K-NN)** algorithms with **cosine distance** to recommend TV shows. Users provide a title of a TV show they like, and the system returns personalized recommendations based on similarity to other TV shows in the dataset.
+The **TV-Show Recommender** is a machine learning-based program that suggests TV shows to users based on their preferences. The system uses **Nearest Neighbors (NN)** and **K-Nearest Neighbors (K-NN)** algorithms with **cosine distance** to recommend TV shows. Users provide a title of a TV show they like, and the system returns recommendations based on similarity to other TV shows in the dataset.
 
 ---
 
