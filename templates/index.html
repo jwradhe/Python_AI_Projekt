@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recommendation System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f9;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        form {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .recommendation {
+            background: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .recommendation h3 {
+            margin-top: 0;
+        }
+        .recommendation p {
+            margin: 5px 0;
+        }
+        .recommendation .overview {
+            font-size: 14px;
+            color: #555;
+        }
+        .error-message {
+            color: red;
+            text-align: center;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>TV-Show Recommendations</h1>
+
+    <!-- Recommendation Form -->
+    <form method="POST" action="/recommend">
+        <label for="title">Enter a Title (TV Show):</label><br><br>
+        <input type="text" id="title" name="title" required><br><br>
+
+        <label for="n_recommendations">Number of Recommendations:</label><br><br>
+        <input type="number" id="n_recommendations" name="n_recommendations" value="10" min="1" max="50"><br><br>
+
+        <input type="submit" value="Get Recommendations">
+    </form>
+
+    <!-- Display Error Message if any -->
+    {% if message %}
+    <div class="error-message">{{ message }}</div>
+    {% endif %}
+
+    <!-- Display Recommendations -->
+    {% if recommendations %}
+    <h2>Recommendations based on "{{ original_title }}":</h2>
+    <div class="recommendations">
+        {% for rec in recommendations %}
+        <div class="recommendation">
+            <h3>{{ rec.title }} ({{ rec.years }})</h3>
+            <p><strong>Genres:</strong> {{ rec.genres }}</p>
+            <p><strong>Networks:</strong> {{ rec.networks }}</p>
+            <p><strong>Rating:</strong> {{ rec.rating }}</p>
+            <p><strong>Seasons:</strong> {{ rec.seasons }}({{ rec.episodes }} episodes)</p>
+            <p class="overview"><strong>Overview:</strong> {{ rec.overview }}</p>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+</div>
+
+</body>
+</html>
